@@ -53,7 +53,7 @@ export default async function handler(req, res) {
     // DISCORD WEBHOOK
     // ==========================================
 
-    const WEBHOOK_URL = https://discord.com/api/webhooks/1433782551092138177/Fdl0xsabAbQGDp8FWNJtLvBqxdkopGNEq5baQu1Brp38VVadfburU2BgmwjGKSaiY_QX
+    const WEBHOOK_URL = "https://discord.com/api/webhooks/1433782551092138177/Fdl0xsabAbQGDp8FWNJtLvBqxdkopGNEq5baQu1Brp38VVadfburU2BgmwjGKSaiY_QX"
         process.env.REPORT_WEBHOOK_URL;
 
 
