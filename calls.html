@@ -1,1 +1,404 @@
+<!DOCTYPE html>
 
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+```
+<title>Active Calls | Police MDT</title>
+
+<style>
+    * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+        font-family: Arial, Helvetica, sans-serif;
+    }
+
+    body {
+        background: #0b1118;
+        color: white;
+        min-height: 100vh;
+    }
+
+    /* SIDEBAR */
+    .sidebar {
+        position: fixed;
+        left: 0;
+        top: 0;
+        width: 240px;
+        height: 100vh;
+        background: #101923;
+        border-right: 1px solid #263443;
+        padding: 20px;
+    }
+
+    .logo {
+        text-align: center;
+        padding-bottom: 25px;
+        border-bottom: 1px solid #263443;
+        margin-bottom: 20px;
+    }
+
+    .logo h1 {
+        font-size: 20px;
+    }
+
+    .logo p {
+        color: #8d9baa;
+        font-size: 12px;
+        margin-top: 5px;
+    }
+
+    .nav a {
+        display: block;
+        color: #c7d0d9;
+        text-decoration: none;
+        padding: 13px;
+        margin-bottom: 5px;
+        border-radius: 5px;
+    }
+
+    .nav a:hover {
+        background: #1c2b3a;
+        color: white;
+    }
+
+    .nav a.active {
+        background: #1d4f7a;
+        color: white;
+    }
+
+    /* MAIN */
+    .main {
+        margin-left: 240px;
+        padding: 30px;
+    }
+
+    .topbar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 30px;
+    }
+
+    .topbar h2 {
+        font-size: 25px;
+    }
+
+    .topbar p {
+        color: #8d9baa;
+        margin-top: 5px;
+    }
+
+    .status {
+        background: #162331;
+        color: #7ee787;
+        padding: 10px 15px;
+        border-radius: 5px;
+        font-size: 13px;
+    }
+
+    /* CALLS */
+    #calls {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 20px;
+    }
+
+    .call {
+        background: #101923;
+        border: 1px solid #263443;
+        border-left: 4px solid #e53935;
+        border-radius: 7px;
+        padding: 20px;
+    }
+
+    .call-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 15px;
+    }
+
+    .call-header h3 {
+        font-size: 18px;
+    }
+
+    .badge {
+        background: #4b1717;
+        color: #ff8b8b;
+        padding: 5px 9px;
+        border-radius: 4px;
+        font-size: 11px;
+        font-weight: bold;
+    }
+
+    .call-info {
+        color: #c7d0d9;
+        line-height: 1.8;
+        font-size: 14px;
+    }
+
+    .call-info strong {
+        color: white;
+    }
+
+    /* NO CALLS */
+    .no-calls {
+        background: #101923;
+        border: 1px solid #263443;
+        padding: 40px;
+        border-radius: 7px;
+        text-align: center;
+        color: #8d9baa;
+    }
+
+    .no-calls h3 {
+        color: white;
+        margin-bottom: 8px;
+    }
+
+    /* ERROR */
+    .error {
+        background: #3b1717;
+        border: 1px solid #7d2c2c;
+        color: #ff8b8b;
+        padding: 20px;
+        border-radius: 7px;
+    }
+
+    /* MOBILE */
+    @media (max-width: 600px) {
+
+        .sidebar {
+            position: relative;
+            width: 100%;
+            height: auto;
+        }
+
+        .main {
+            margin-left: 0;
+            padding: 15px;
+        }
+
+        .topbar {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 15px;
+        }
+    }
+</style>
+```
+
+</head>
+
+<body>
+
+```
+<!-- SIDEBAR -->
+<aside class="sidebar">
+
+    <div class="logo">
+        <h1>POLICE MDT</h1>
+        <p>Official Information System</p>
+    </div>
+
+    <nav class="nav">
+
+        <a href="index.html">
+            Dashboard
+        </a>
+
+        <a href="calls.html" class="active">
+            Active Calls
+        </a>
+
+    </nav>
+
+</aside>
+
+
+<!-- MAIN -->
+<main class="main">
+
+    <div class="topbar">
+
+        <div>
+            <h2>Active Calls</h2>
+
+            <p>
+                Live police dispatch and incident calls
+            </p>
+        </div>
+
+        <div class="status">
+            ● MDT ONLINE
+        </div>
+
+    </div>
+
+
+    <!-- CALLS WILL APPEAR HERE -->
+    <div id="calls">
+
+        <div class="no-calls">
+
+            <h3>No Active Calls</h3>
+
+            <p>
+                There are currently no active incidents or calls.
+            </p>
+
+        </div>
+
+    </div>
+
+</main>
+
+
+<script>
+
+    // Your Vercel API
+    const API_URL =
+        "https://ausbotsmdt.vercel.app/api/robbery";
+
+
+    // Load active calls
+    async function loadCalls() {
+
+        const callsContainer =
+            document.getElementById("calls");
+
+        try {
+
+            const response =
+                await fetch(API_URL);
+
+            if (!response.ok) {
+                throw new Error(
+                    "API returned error " +
+                    response.status
+                );
+            }
+
+            const data =
+                await response.json();
+
+
+            // Clear current calls
+            callsContainer.innerHTML = "";
+
+
+            // If there are no calls
+            if (!data.robberies ||
+                data.robberies.length === 0) {
+
+                callsContainer.innerHTML = `
+
+                    <div class="no-calls">
+
+                        <h3>No Active Calls</h3>
+
+                        <p>
+                            There are currently no
+                            active incidents or calls.
+                        </p>
+
+                    </div>
+
+                `;
+
+                return;
+            }
+
+
+            // Display every robbery
+            data.robberies.forEach(function(robbery) {
+
+                const call =
+                    document.createElement("div");
+
+                call.className = "call";
+
+                call.innerHTML = `
+
+                    <div class="call-header">
+
+                        <h3>
+                            🚨 Robbery
+                        </h3>
+
+                        <span class="badge">
+                            ACTIVE
+                        </span>
+
+                    </div>
+
+
+                    <div class="call-info">
+
+                        <p>
+                            <strong>Location:</strong>
+                            ${robbery.location}
+                        </p>
+
+                        <p>
+                            <strong>Time:</strong>
+                            ${robbery.time}
+                        </p>
+
+                    </div>
+
+                `;
+
+                callsContainer.appendChild(call);
+
+            });
+
+        }
+
+        catch (error) {
+
+            console.error(
+                "Failed to load calls:",
+                error
+            );
+
+            callsContainer.innerHTML = `
+
+                <div class="error">
+
+                    <strong>
+                        Unable to connect to MDT API
+                    </strong>
+
+                    <p style="margin-top: 8px;">
+                        Please contact a system administrator.
+                    </p>
+
+                </div>
+
+            `;
+
+        }
+
+    }
+
+
+    // Load calls when page opens
+    loadCalls();
+
+
+    // Refresh every 5 seconds
+    setInterval(
+        loadCalls,
+        5000
+    );
+
+</script>
+```
+
+</body>
+</html>
