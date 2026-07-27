@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+>
+
+<title>Vehicle Registration Check</title>
+
+<style>
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    background: #0b1118;
+    color: white;
+    min-height: 100vh;
+}
+
+.navbar {
+    background: #101923;
+    border-bottom: 1px solid #263443;
+    padding: 20px 40px;
+}
+
+.navbar a {
+    color: #c7d0d9;
+    text-decoration: none;
+    margin-right: 25px;
+}
+
+.container {
+    max-width: 800px;
+    margin: 50px auto;
+    padding: 20px;
+}
+
+.card {
+    background: #101923;
+    border: 1px solid #263443;
+    border-radius: 8px;
+    padding: 30px;
+    margin-bottom: 20px;
+}
+
+input {
+    width: 100%;
+    padding: 13px;
+    margin-top: 10px;
+    background: #0b1118;
+    color: white;
+    border: 1px solid #263443;
+    border-radius: 5px;
+}
+
+button {
+    width: 100%;
+    margin-top: 15px;
+    padding: 13px;
+    background: #1d4f7a;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+button:hover {
+    background: #27689f;
+}
+
+.info {
+    margin-top: 20px;
+}
+
+.row {
+    padding: 12px 0;
+    border-bottom: 1px solid #263443;
+}
+
+.label {
+    color: #8d9baa;
+    font-size: 13px;
+}
+
+.value {
+    margin-top: 5px;
+}
+
+.record {
+    background: #162331;
+    padding: 15px;
+    margin-top: 10px;
+    border-radius: 5px;
+}
+
+.warning {
+    border-left: 4px solid #e3b341;
+}
+
+.ticket {
+    border-left: 4px solid #ff7b72;
+}
+
+.note {
+    border-left: 4px solid #4d9bd3;
+}
+
+.error {
+    color: #ff7b72;
+    margin-top: 15px;
+}
+
+</style>
+
+</head>
+
+<body>
+
+
+<div class="navbar">
+
+<a href="index.html">
+Home
+</a>
+
+<a href="regos.html">
+Register Vehicle
+</a>
+
+<a href="regocheck.html">
+Check Registration
+</a>
+
+</div>
+
+
+<div class="container">
+
+
+<div class="card">
+
+<h1>
+Check Vehicle Registration
+</h1>
+
+<p>
+Enter your registration and password.
+</p>
+
+
+<input
+    type="text"
+    id="rego"
+    placeholder="Vehicle Registration"
+>
+
+
+<input
+    type="password"
+    id="password"
+    placeholder="Password"
+>
+
+
+<button onclick="checkRegistration()">
+
+View Record
+
+</button>
+
+
+<div
+    id="error"
+    class="error"
+></div>
+
+
+</div>
+
+
+<div
+    id="result"
+    style="display:none;"
+>
+
+
+<div class="card">
+
+<h2>
+Vehicle Information
+</h2>
+
+
+<div class="info">
+
+
+<div class="row">
+
+<div class="label">
+Registration
+</div>
+
+<div
+    class="value"
+    id="resultRego"
+></div>
+
+</div>
+
+
+<div class="row">
+
+<div class="label">
+RP Name
+</div>
+
+<div
+    class="value"
+    id="resultRP"
+></div>
+
+</div>
+
+
+<div class="row">
+
+<div class="label">
+Discord
+</div>
+
+<div
+    class="value"
+    id="resultDiscord"
+></div>
+
+</div>
+
+
+<div class="row">
+
+<div class="label">
+Roblox
+</div>
+
+<div
+    class="value"
+    id="resultRoblox"
+></div>
+
+</div>
+
+
+<div class="row">
+
+<div class="label">
+Vehicle
+</div>
+
+<div
+    class="value"
+    id="resultCar"
+></div>
+
+</div>
+
+
+</div>
+
+</div>
+
+
+<div class="card">
+
+<h2>
+Warnings
+</h2>
+
+<div id="warnings">
+
+No warnings recorded.
+
+</div>
+
+</div>
+
+
+<div class="card">
+
+<h2>
+Tickets
+</h2>
+
+<div id="tickets">
+
+No tickets recorded.
+
+</div>
+
+</div>
+
+
+<div class="card">
+
+<h2>
+Notes
+</h2>
+
+<div id="notes">
+
+No notes recorded.
+
+</div>
+
+</div>
+
+
+</div>
+
+
+</div>
+
+
+<script>
+
+const API_URL =
+    "https://ausbotsmdt.vercel.app/api/rego";
+
+
+async function checkRegistration() {
+
+
+    const rego =
+        document
+            .getElementById("rego")
+            .value
+            .trim();
+
+
+    const password =
+        document
+            .getElementById("password")
+            .value;
+
+
+    const error =
+        document
+            .getElementById("error");
+
+
+    const result =
+        document
+            .getElementById("result");
+
+
+    error.textContent = "";
+
+    result.style.display =
+        "none";
+
+
+    if (!rego || !password) {
+
+        error.textContent =
+            "Please enter your registration and password.";
+
+        return;
+
+    }
+
+
+    try {
+
+
+        const response =
+            await fetch(
+
+                API_URL +
+
+                "?rego=" +
+
+                encodeURIComponent(
+                    rego
+                ) +
+
+                "&password=" +
+
+                encodeURIComponent(
+                    password
+                )
+
+            );
+
+
+        const data =
+            await response.json();
+
+
+        if (!response.ok) {
+
+            throw new Error(
+                data.error ||
+                "Unable to find registration"
+            );
+
+        }
+
+
+        const vehicle =
+            data.registration;
+
+
+        document
+            .getElementById(
+                "resultRego"
+            )
+            .textContent =
+                vehicle.rego;
+
+
+        document
+            .getElementById(
+                "resultRP"
+            )
+            .textContent =
+                vehicle.rpName;
+
+
+        document
+            .getElementById(
+                "resultDiscord"
+            )
+            .textContent =
+                vehicle.discordUser;
+
+
+        document
+            .getElementById(
+                "resultRoblox"
+            )
+            .textContent =
+                vehicle.robloxUser;
+
+
+        document
+            .getElementById(
+                "resultCar"
+            )
+            .textContent =
+                vehicle.carModel;
+
+
+        displayRecords(
+            "warnings",
+            vehicle.warnings,
+            "warning",
+            "No warnings recorded."
+        );
+
+
+        displayRecords(
+            "tickets",
+            vehicle.tickets,
+            "ticket",
+            "No tickets recorded."
+        );
+
+
+        displayRecords(
+            "notes",
+            vehicle.notes,
+            "note",
+            "No notes recorded."
+        );
+
+
+        result.style.display =
+            "block";
+
+
+    }
+
+    catch (err) {
+
+        error.textContent =
+            err.message;
+
+    }
+
+}
+
+
+function displayRecords(
+
+    elementId,
+
+    records,
+
+    className,
+
+    emptyText
+
+) {
+
+
+    const element =
+        document
+            .getElementById(
+                elementId
+            );
+
+
+    if (
+        !records ||
+        records.length === 0
+    ) {
+
+        element.textContent =
+            emptyText;
+
+        return;
+
+    }
+
+
+    element.innerHTML =
+        "";
+
+
+    records.forEach(
+        record => {
+
+
+            const div =
+                document.createElement(
+                    "div"
+                );
+
+
+            div.className =
+                "record " +
+                className;
+
+
+            div.innerHTML =
+
+                "<strong>" +
+
+                record.message +
+
+                "</strong><br><br>" +
+
+                "Officer: " +
+
+                record.officer;
+
+
+            element.appendChild(
+                div
+            );
+
+        }
+    );
+
+}
+
+</script>
+
+
+</body>
+
+</html>
