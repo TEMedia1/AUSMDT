@@ -1,1 +1,982 @@
+<!DOCTYPE html>
+<html lang="en">
 
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Police MDT | Dashboard</title>
+
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+
+            font-family:
+                Arial,
+                Helvetica,
+                sans-serif;
+        }
+
+
+        body {
+
+            background: #0b1118;
+
+            color: white;
+
+            min-height: 100vh;
+
+        }
+
+
+        /* =========================
+           SIDEBAR
+        ========================= */
+
+        .sidebar {
+
+            position: fixed;
+
+            left: 0;
+
+            top: 0;
+
+            width: 240px;
+
+            height: 100vh;
+
+            background: #101923;
+
+            border-right:
+                1px solid #263443;
+
+            padding: 20px;
+
+        }
+
+
+        .logo {
+
+            text-align: center;
+
+            padding-bottom: 25px;
+
+            border-bottom:
+                1px solid #263443;
+
+            margin-bottom: 20px;
+
+        }
+
+
+        .logo h1 {
+
+            font-size: 20px;
+
+        }
+
+
+        .logo p {
+
+            color: #8d9baa;
+
+            font-size: 12px;
+
+            margin-top: 5px;
+
+        }
+
+
+        /* =========================
+           NAVIGATION
+        ========================= */
+
+        .nav a {
+
+            display: block;
+
+            color: #c7d0d9;
+
+            text-decoration: none;
+
+            padding: 13px;
+
+            margin-bottom: 5px;
+
+            border-radius: 5px;
+
+        }
+
+
+        .nav a:hover {
+
+            background: #1c2b3a;
+
+            color: white;
+
+        }
+
+
+        .nav a.active {
+
+            background: #1d4f7a;
+
+            color: white;
+
+        }
+
+
+        /* =========================
+           MAIN
+        ========================= */
+
+        .main {
+
+            margin-left: 240px;
+
+            padding: 30px;
+
+        }
+
+
+        /* =========================
+           TOP BAR
+        ========================= */
+
+        .topbar {
+
+            display: flex;
+
+            justify-content:
+                space-between;
+
+            align-items: center;
+
+            margin-bottom: 30px;
+
+        }
+
+
+        .topbar h2 {
+
+            font-size: 25px;
+
+        }
+
+
+        .topbar p {
+
+            color: #8d9baa;
+
+            margin-top: 5px;
+
+        }
+
+
+        /* =========================
+           SYSTEM STATUS
+        ========================= */
+
+        .status {
+
+            background: #162331;
+
+            color: #7ee787;
+
+            padding:
+                10px 15px;
+
+            border-radius: 5px;
+
+            font-size: 13px;
+
+        }
+
+
+        .status.offline {
+
+            color: #ff7b72;
+
+        }
+
+
+        /* =========================
+           DASHBOARD CARDS
+        ========================= */
+
+        .cards {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(
+                    auto-fit,
+                    minmax(
+                        220px,
+                        1fr
+                    )
+                );
+
+            gap: 20px;
+
+            margin-bottom: 30px;
+
+        }
+
+
+        .card {
+
+            background: #101923;
+
+            border:
+                1px solid #263443;
+
+            border-radius: 7px;
+
+            padding: 25px;
+
+        }
+
+
+        .card h3 {
+
+            color: #8d9baa;
+
+            font-size: 13px;
+
+            font-weight: normal;
+
+            margin-bottom: 10px;
+
+        }
+
+
+        .card .number {
+
+            font-size: 32px;
+
+            font-weight: bold;
+
+        }
+
+
+        .card .description {
+
+            color: #8d9baa;
+
+            font-size: 12px;
+
+            margin-top: 8px;
+
+        }
+
+
+        /* =========================
+           ACTIVE CALLS
+        ========================= */
+
+        .calls-card {
+
+            border-left:
+                4px solid #e53935;
+
+        }
+
+
+        /* =========================
+           QUICK ACCESS
+        ========================= */
+
+        .section {
+
+            background: #101923;
+
+            border:
+                1px solid #263443;
+
+            border-radius: 7px;
+
+            padding: 25px;
+
+            margin-bottom: 20px;
+
+        }
+
+
+        .section h2 {
+
+            font-size: 18px;
+
+            margin-bottom: 20px;
+
+        }
+
+
+        .quick-links {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(
+                    auto-fit,
+                    minmax(
+                        200px,
+                        1fr
+                    )
+                );
+
+            gap: 15px;
+
+        }
+
+
+        .quick-link {
+
+            display: block;
+
+            background: #162331;
+
+            border:
+                1px solid #263443;
+
+            border-radius: 6px;
+
+            padding: 20px;
+
+            color: white;
+
+            text-decoration: none;
+
+            transition: 0.2s;
+
+        }
+
+
+        .quick-link:hover {
+
+            background: #1c2b3a;
+
+            transform:
+                translateY(-2px);
+
+        }
+
+
+        .quick-link h3 {
+
+            margin-bottom: 8px;
+
+        }
+
+
+        .quick-link p {
+
+            color: #8d9baa;
+
+            font-size: 13px;
+
+        }
+
+
+        /* =========================
+           NOTICE
+        ========================= */
+
+        .notice {
+
+            background: #162331;
+
+            border:
+                1px solid #263443;
+
+            border-radius: 6px;
+
+            padding: 20px;
+
+            color: #c7d0d9;
+
+            font-size: 13px;
+
+            line-height: 1.6;
+
+        }
+
+
+        /* =========================
+           MOBILE
+        ========================= */
+
+        @media (max-width: 600px) {
+
+            .sidebar {
+
+                position: relative;
+
+                width: 100%;
+
+                height: auto;
+
+            }
+
+
+            .main {
+
+                margin-left: 0;
+
+                padding: 15px;
+
+            }
+
+
+            .topbar {
+
+                flex-direction: column;
+
+                align-items:
+                    flex-start;
+
+                gap: 15px;
+
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <!-- =========================
+         SIDEBAR
+    ========================= -->
+
+    <aside class="sidebar">
+
+
+        <div class="logo">
+
+            <h1>
+                POLICE MDT
+            </h1>
+
+            <p>
+                Official Information System
+            </p>
+
+        </div>
+
+
+        <nav class="nav">
+
+
+            <a
+                href="index.html"
+                class="active"
+            >
+
+                Dashboard
+
+            </a>
+
+
+            <a
+                href="calls.html"
+            >
+
+                Active Calls
+
+            </a>
+
+
+        </nav>
+
+
+    </aside>
+
+
+
+    <!-- =========================
+         MAIN
+    ========================= -->
+
+    <main class="main">
+
+
+        <!-- TOP BAR -->
+
+        <div class="topbar">
+
+
+            <div>
+
+                <h2>
+                    Dashboard
+                </h2>
+
+                <p>
+                    Police Mobile Data Terminal
+                </p>
+
+            </div>
+
+
+            <div
+                class="status"
+                id="systemStatus"
+            >
+
+                ● CHECKING SYSTEM...
+
+            </div>
+
+
+        </div>
+
+
+
+        <!-- =========================
+             DASHBOARD CARDS
+        ========================= -->
+
+        <div class="cards">
+
+
+            <!-- ACTIVE CALLS -->
+
+            <div class="card calls-card">
+
+
+                <h3>
+                    ACTIVE CALLS
+                </h3>
+
+
+                <div
+                    class="number"
+                    id="activeCalls"
+                >
+
+                    -
+
+                </div>
+
+
+                <div class="description">
+
+                    Current active incidents
+
+                </div>
+
+
+            </div>
+
+
+
+            <!-- OFFICERS -->
+
+            <div class="card">
+
+
+                <h3>
+                    OFFICERS
+                </h3>
+
+
+                <div
+                    class="number"
+                    id="officerCount"
+                >
+
+                    -
+
+                </div>
+
+
+                <div class="description">
+
+                    Police officers currently online
+
+                </div>
+
+
+            </div>
+
+
+
+            <!-- DATABASE -->
+
+            <div class="card">
+
+
+                <h3>
+                    DATABASE
+                </h3>
+
+
+                <div
+                    class="number"
+                    id="databaseStatus"
+                >
+
+                    ONLINE
+
+                </div>
+
+
+                <div class="description">
+
+                    MDT system operational
+
+                </div>
+
+
+            </div>
+
+
+        </div>
+
+
+
+        <!-- =========================
+             QUICK ACCESS
+        ========================= -->
+
+        <div class="section">
+
+
+            <h2>
+                Quick Access
+            </h2>
+
+
+            <div class="quick-links">
+
+
+                <!-- ACTIVE CALLS -->
+
+                <a
+                    href="calls.html"
+                    class="quick-link"
+                >
+
+
+                    <h3>
+                        🚨 Active Calls
+                    </h3>
+
+
+                    <p>
+
+                        View live robbery and
+                        incident calls.
+
+                    </p>
+
+
+                </a>
+
+
+
+                <!-- OFFICER DATABASE -->
+
+                <a
+                    href="#"
+                    class="quick-link"
+                >
+
+
+                    <h3>
+                        👮 Officer Database
+                    </h3>
+
+
+                    <p>
+
+                        Search registered officers.
+                        Coming soon.
+
+                    </p>
+
+
+                </a>
+
+
+
+                <!-- INCIDENT REPORTS -->
+
+                <a
+                    href="#"
+                    class="quick-link"
+                >
+
+
+                    <h3>
+                        📋 Incident Reports
+                    </h3>
+
+
+                    <p>
+
+                        View and manage incident
+                        reports. Coming soon.
+
+                    </p>
+
+
+                </a>
+
+
+            </div>
+
+
+        </div>
+
+
+
+        <!-- =========================
+             SYSTEM INFORMATION
+        ========================= -->
+
+        <div class="section">
+
+
+            <h2>
+                System Information
+            </h2>
+
+
+            <div class="notice">
+
+
+                <strong>
+                    Police MDT System
+                </strong>
+
+
+                <br>
+                <br>
+
+
+                This system provides authorised
+                personnel with access to live
+                incident information and
+                operational resources.
+
+
+                <br>
+                <br>
+
+
+                The MDT is currently connected
+                to the live Roblox incident
+                reporting system.
+
+
+            </div>
+
+
+        </div>
+
+
+    </main>
+
+
+
+    <!-- =========================
+         JAVASCRIPT
+    ========================= -->
+
+    <script>
+
+
+        // =========================
+        // VERCEL API
+        // =========================
+
+        const API_URL =
+            "https://ausbotsmdt.vercel.app/api/robbery";
+
+
+
+        // =========================
+        // LOAD DASHBOARD
+        // =========================
+
+        async function loadDashboard() {
+
+
+            // Get HTML elements
+
+            const status =
+                document.getElementById(
+                    "systemStatus"
+                );
+
+
+            const activeCalls =
+                document.getElementById(
+                    "activeCalls"
+                );
+
+
+            const officerCount =
+                document.getElementById(
+                    "officerCount"
+                );
+
+
+            const databaseStatus =
+                document.getElementById(
+                    "databaseStatus"
+                );
+
+
+            try {
+
+
+                // Contact API
+
+                const response =
+                    await fetch(
+                        API_URL
+                    );
+
+
+                // Check response
+
+                if (!response.ok) {
+
+                    throw new Error(
+                        "API Error: " +
+                        response.status
+                    );
+
+                }
+
+
+                // Convert response to JSON
+
+                const data =
+                    await response.json();
+
+
+
+                // =========================
+                // ACTIVE CALLS
+                // =========================
+
+                const robberies =
+                    data.robberies || [];
+
+
+                activeCalls.textContent =
+                    robberies.length;
+
+
+
+                // =========================
+                // OFFICERS
+                // =========================
+
+                officerCount.textContent =
+                    data.officers || 0;
+
+
+
+                // =========================
+                // SYSTEM ONLINE
+                // =========================
+
+                status.textContent =
+                    "● MDT ONLINE";
+
+
+                status.classList.remove(
+                    "offline"
+                );
+
+
+                databaseStatus.textContent =
+                    "ONLINE";
+
+
+            }
+
+
+            catch (error) {
+
+
+                console.error(
+                    "MDT API Error:",
+                    error
+                );
+
+
+
+                // =========================
+                // SYSTEM OFFLINE
+                // =========================
+
+                status.textContent =
+                    "● MDT OFFLINE";
+
+
+                status.classList.add(
+                    "offline"
+                );
+
+
+                activeCalls.textContent =
+                    "-";
+
+
+                officerCount.textContent =
+                    "-";
+
+
+                databaseStatus.textContent =
+                    "OFFLINE";
+
+
+            }
+
+        }
+
+
+
+        // =========================
+        // INITIAL LOAD
+        // =========================
+
+        loadDashboard();
+
+
+
+        // =========================
+        // REFRESH EVERY 5 SECONDS
+        // =========================
+
+        setInterval(
+            loadDashboard,
+            5000
+        );
+
+
+    </script>
+
+
+</body>
+
+</html>
