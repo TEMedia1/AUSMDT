@@ -1,0 +1,1997 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+>
+
+<title>Police Vehicle Check | Police MDT</title>
+
+
+<style>
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+
+body {
+
+    background: #0b1118;
+
+    color: white;
+
+    min-height: 100vh;
+
+}
+
+
+/* =========================
+   NAVBAR
+========================= */
+
+.navbar {
+
+    height: 65px;
+
+    background: #101923;
+
+    border-bottom:
+        1px solid #263443;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content:
+        space-between;
+
+    padding:
+        0 30px;
+
+}
+
+
+.navbar-left {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 15px;
+
+}
+
+
+.navbar h1 {
+
+    font-size: 18px;
+
+}
+
+
+.navbar span {
+
+    color: #8d9baa;
+
+    font-size: 12px;
+
+}
+
+
+.navbar a {
+
+    color: #c7d0d9;
+
+    text-decoration: none;
+
+    margin-left: 20px;
+
+    font-size: 13px;
+
+}
+
+
+.navbar a:hover {
+
+    color: white;
+
+}
+
+
+/* =========================
+   CONTAINER
+========================= */
+
+.container {
+
+    max-width: 1000px;
+
+    margin:
+        40px auto;
+
+    padding:
+        20px;
+
+}
+
+
+/* =========================
+   CARD
+========================= */
+
+.card {
+
+    background: #101923;
+
+    border:
+        1px solid #263443;
+
+    border-radius: 8px;
+
+    padding: 25px;
+
+    margin-bottom: 20px;
+
+}
+
+
+.card h2 {
+
+    margin-bottom: 8px;
+
+}
+
+
+.description {
+
+    color: #8d9baa;
+
+    font-size: 13px;
+
+    margin-bottom: 20px;
+
+}
+
+
+/* =========================
+   SEARCH
+========================= */
+
+.search-box {
+
+    display: flex;
+
+    gap: 10px;
+
+}
+
+
+.search-box input {
+
+    flex: 1;
+
+}
+
+
+input,
+textarea,
+select {
+
+    width: 100%;
+
+    background: #0b1118;
+
+    color: white;
+
+    border:
+        1px solid #263443;
+
+    border-radius: 5px;
+
+    padding: 12px;
+
+    outline: none;
+
+}
+
+
+textarea {
+
+    min-height: 100px;
+
+    resize: vertical;
+
+}
+
+
+input:focus,
+textarea:focus,
+select:focus {
+
+    border-color:
+        #1d4f7a;
+
+}
+
+
+button {
+
+    border: none;
+
+    cursor: pointer;
+
+    border-radius: 5px;
+
+    padding:
+        12px 18px;
+
+    color: white;
+
+}
+
+
+.search-button {
+
+    background: #1d4f7a;
+
+}
+
+
+.search-button:hover {
+
+    background: #27689f;
+
+}
+
+
+/* =========================
+   VEHICLE HEADER
+========================= */
+
+.vehicle-header {
+
+    display: flex;
+
+    justify-content:
+        space-between;
+
+    align-items: center;
+
+    margin-bottom: 25px;
+
+}
+
+
+.rego-plate {
+
+    background: #f2f2f2;
+
+    color: #111;
+
+    padding:
+        10px 18px;
+
+    border-radius: 5px;
+
+    font-size: 20px;
+
+    font-weight: bold;
+
+    letter-spacing: 2px;
+
+}
+
+
+/* =========================
+   STATUS
+========================= */
+
+.status {
+
+    padding:
+        8px 12px;
+
+    border-radius: 5px;
+
+    font-size: 12px;
+
+}
+
+
+.status-active {
+
+    background: #12351f;
+
+    color: #7ee787;
+
+}
+
+
+.status-wanted {
+
+    background: #451a1a;
+
+    color: #ff7b72;
+
+}
+
+
+.status-suspended {
+
+    background: #453615;
+
+    color: #e3b341;
+
+}
+
+
+/* =========================
+   INFORMATION GRID
+========================= */
+
+.info-grid {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(
+            2,
+            1fr
+        );
+
+    gap: 15px;
+
+}
+
+
+.info-item {
+
+    background: #162331;
+
+    padding: 15px;
+
+    border-radius: 5px;
+
+}
+
+
+.info-label {
+
+    color: #8d9baa;
+
+    font-size: 11px;
+
+    margin-bottom: 5px;
+
+}
+
+
+.info-value {
+
+    font-size: 14px;
+
+}
+
+
+/* =========================
+   RECORDS
+========================= */
+
+.record {
+
+    background: #162331;
+
+    border-radius: 5px;
+
+    padding: 15px;
+
+    margin-top: 10px;
+
+}
+
+
+.record-header {
+
+    display: flex;
+
+    justify-content:
+        space-between;
+
+    margin-bottom: 8px;
+
+}
+
+
+.record-type {
+
+    font-size: 11px;
+
+    text-transform:
+        uppercase;
+
+}
+
+
+.record-date {
+
+    color: #8d9baa;
+
+    font-size: 11px;
+
+}
+
+
+.warning {
+
+    border-left:
+        4px solid #e3b341;
+
+}
+
+
+.ticket {
+
+    border-left:
+        4px solid #ff7b72;
+
+}
+
+
+.note {
+
+    border-left:
+        4px solid #4d9bd3;
+
+}
+
+
+/* =========================
+   POLICE ACTIONS
+========================= */
+
+.actions {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(
+            3,
+            1fr
+        );
+
+    gap: 10px;
+
+    margin-top: 20px;
+
+}
+
+
+.action-warning {
+
+    background: #806000;
+
+}
+
+
+.action-ticket {
+
+    background: #8a2929;
+
+}
+
+
+.action-note {
+
+    background: #1d4f7a;
+
+}
+
+
+.action-wanted {
+
+    background: #a52222;
+
+}
+
+
+.action-suspend {
+
+    background: #806000;
+
+}
+
+
+.action-delete {
+
+    background: #5c1717;
+
+}
+
+
+.actions button:hover {
+
+    opacity: 0.85;
+
+}
+
+
+/* =========================
+   ADD RECORD
+========================= */
+
+.add-record {
+
+    display: none;
+
+    margin-top: 20px;
+
+    padding-top: 20px;
+
+    border-top:
+        1px solid #263443;
+
+}
+
+
+.add-record.show {
+
+    display: block;
+
+}
+
+
+.add-record h3 {
+
+    margin-bottom: 15px;
+
+}
+
+
+.add-record button {
+
+    margin-top: 10px;
+
+    background: #1d4f7a;
+
+}
+
+
+/* =========================
+   ERROR
+========================= */
+
+#error {
+
+    display: none;
+
+    background: #351515;
+
+    color: #ff7b72;
+
+    padding: 15px;
+
+    border-radius: 5px;
+
+    margin-top: 15px;
+
+}
+
+
+/* =========================
+   EMPTY
+========================= */
+
+.empty {
+
+    text-align: center;
+
+    color: #8d9baa;
+
+    padding: 30px;
+
+}
+
+
+/* =========================
+   MOBILE
+========================= */
+
+@media (
+    max-width: 700px
+) {
+
+    .navbar {
+
+        flex-direction:
+            column;
+
+        height: auto;
+
+        gap: 10px;
+
+        padding:
+            15px;
+
+    }
+
+
+    .navbar a {
+
+        margin-left: 10px;
+
+    }
+
+
+    .search-box {
+
+        flex-direction:
+            column;
+
+    }
+
+
+    .info-grid {
+
+        grid-template-columns:
+            1fr;
+
+    }
+
+
+    .actions {
+
+        grid-template-columns:
+            1fr;
+
+    }
+
+
+    .vehicle-header {
+
+        flex-direction:
+            column;
+
+        align-items:
+            flex-start;
+
+        gap: 15px;
+
+    }
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<!-- =========================
+     NAVBAR
+========================= -->
+
+<nav class="navbar">
+
+
+    <div class="navbar-left">
+
+        <div>
+
+            <h1>
+                POLICE MDT
+            </h1>
+
+            <span>
+                Vehicle Registration Database
+            </span>
+
+        </div>
+
+    </div>
+
+
+    <div>
+
+        <a href="mdt.html">
+            MDT
+        </a>
+
+        <a href="calls.html">
+            Calls
+        </a>
+
+        <a href="officers.html">
+            Officers
+        </a>
+
+        <a href="index.html">
+            Exit
+        </a>
+
+    </div>
+
+
+</nav>
+
+
+
+<!-- =========================
+     MAIN
+========================= -->
+
+<div class="container">
+
+
+    <!-- SEARCH -->
+
+    <div class="card">
+
+
+        <h2>
+            Vehicle Registration Check
+        </h2>
+
+
+        <p class="description">
+
+            Search the Police Vehicle Registration
+            Database by registration plate.
+
+        </p>
+
+
+        <div class="search-box">
+
+
+            <input
+
+                type="text"
+
+                id="regoSearch"
+
+                placeholder="Enter registration plate"
+
+                onkeydown="
+                    if(event.key === 'Enter')
+                    searchVehicle();
+                "
+
+            >
+
+
+            <button
+
+                class="search-button"
+
+                onclick="
+                    searchVehicle();
+                "
+
+            >
+
+                Search
+
+            </button>
+
+
+        </div>
+
+
+        <div id="error"></div>
+
+
+    </div>
+
+
+
+    <!-- VEHICLE RESULT -->
+
+    <div
+        class="card"
+        id="vehicleResult"
+        style="display:none;"
+    >
+
+
+        <div class="vehicle-header">
+
+
+            <div>
+
+                <h2>
+                    Vehicle Record
+                </h2>
+
+            </div>
+
+
+            <div
+                class="rego-plate"
+                id="resultRego"
+            >
+
+                ABC123
+
+            </div>
+
+
+        </div>
+
+
+        <!-- VEHICLE INFO -->
+
+        <div class="info-grid">
+
+
+            <div class="info-item">
+
+                <div class="info-label">
+                    RP NAME
+                </div>
+
+                <div
+                    class="info-value"
+                    id="resultRP"
+                ></div>
+
+            </div>
+
+
+            <div class="info-item">
+
+                <div class="info-label">
+                    DISCORD USER
+                </div>
+
+                <div
+                    class="info-value"
+                    id="resultDiscord"
+                ></div>
+
+            </div>
+
+
+            <div class="info-item">
+
+                <div class="info-label">
+                    ROBLOX USER
+                </div>
+
+                <div
+                    class="info-value"
+                    id="resultRoblox"
+                ></div>
+
+            </div>
+
+
+            <div class="info-item">
+
+                <div class="info-label">
+                    VEHICLE
+                </div>
+
+                <div
+                    class="info-value"
+                    id="resultCar"
+                ></div>
+
+            </div>
+
+
+        </div>
+
+
+
+        <!-- =========================
+             POLICE ACTIONS
+        ========================= -->
+
+        <div class="actions">
+
+
+            <button
+
+                class="action-warning"
+
+                onclick="
+                    openRecord('warning');
+                "
+
+            >
+
+                ⚠️ Add Warning
+
+            </button>
+
+
+            <button
+
+                class="action-ticket"
+
+                onclick="
+                    openRecord('ticket');
+                "
+
+            >
+
+                🎫 Issue Ticket
+
+            </button>
+
+
+            <button
+
+                class="action-note"
+
+                onclick="
+                    openRecord('note');
+                "
+
+            >
+
+                📝 Add Note
+
+            </button>
+
+
+        </div>
+
+
+        <div class="actions">
+
+
+            <button
+
+                class="action-wanted"
+
+                onclick="
+                    addRecord(
+                        'warning',
+                        'Vehicle flagged as WANTED'
+                    );
+                "
+
+            >
+
+                🚨 Mark Wanted
+
+            </button>
+
+
+            <button
+
+                class="action-suspend"
+
+                onclick="
+                    addRecord(
+                        'warning',
+                        'Vehicle registration SUSPENDED'
+                    );
+                "
+
+            >
+
+                🚫 Suspend Rego
+
+            </button>
+
+
+            <button
+
+                class="action-delete"
+
+                onclick="
+                    deleteRegistration();
+                "
+
+            >
+
+                🗑️ Delete Registration
+
+            </button>
+
+
+        </div>
+
+
+
+        <!-- ADD RECORD FORM -->
+
+        <div
+            class="add-record"
+            id="addRecordBox"
+        >
+
+
+            <h3 id="recordTitle">
+                Add Record
+            </h3>
+
+
+            <textarea
+
+                id="recordMessage"
+
+                placeholder="Enter details..."
+
+            ></textarea>
+
+
+            <input
+
+                type="text"
+
+                id="officerName"
+
+                placeholder="Officer name"
+
+            >
+
+
+            <button
+
+                onclick="
+                    submitRecord();
+                "
+
+            >
+
+                Save Record
+
+            </button>
+
+
+        </div>
+
+
+    </div>
+
+
+
+    <!-- =========================
+         WARNINGS
+    ========================= -->
+
+    <div
+        class="card"
+        id="warningsCard"
+        style="display:none;"
+    >
+
+        <h2>
+            ⚠️ Warnings
+        </h2>
+
+        <div id="warningsList"></div>
+
+    </div>
+
+
+
+    <!-- =========================
+         TICKETS
+    ========================= -->
+
+    <div
+        class="card"
+        id="ticketsCard"
+        style="display:none;"
+    >
+
+        <h2>
+            🎫 Tickets
+        </h2>
+
+        <div id="ticketsList"></div>
+
+    </div>
+
+
+
+    <!-- =========================
+         NOTES
+    ========================= -->
+
+    <div
+        class="card"
+        id="notesCard"
+        style="display:none;"
+    >
+
+        <h2>
+            📝 Police Notes
+        </h2>
+
+        <div id="notesList"></div>
+
+    </div>
+
+
+</div>
+
+
+
+<script>
+
+
+// ==========================================
+// API
+// ==========================================
+
+const API_URL =
+    "https://ausbotsmdt.vercel.app/api/rego";
+
+
+// Current vehicle
+
+let currentVehicle = null;
+
+
+// Current record type
+
+let currentRecordType = null;
+
+
+
+// ==========================================
+// SEARCH VEHICLE
+// ==========================================
+
+async function searchVehicle() {
+
+
+    const rego =
+
+        document
+            .getElementById(
+                "regoSearch"
+            )
+            .value
+            .trim();
+
+
+    const error =
+
+        document
+            .getElementById(
+                "error"
+            );
+
+
+    const result =
+
+        document
+            .getElementById(
+                "vehicleResult"
+            );
+
+
+    error.style.display =
+        "none";
+
+
+    result.style.display =
+        "none";
+
+
+    if (!rego) {
+
+        error.textContent =
+            "Please enter a registration.";
+
+        error.style.display =
+            "block";
+
+        return;
+
+    }
+
+
+    try {
+
+
+        /*
+        Police search does NOT
+        require the owner's password.
+        */
+
+
+        const response =
+
+            await fetch(
+
+                API_URL +
+
+                "?rego=" +
+
+                encodeURIComponent(
+                    rego
+                )
+
+            );
+
+
+        const data =
+
+            await response.json();
+
+
+        if (!response.ok) {
+
+            throw new Error(
+
+                data.error ||
+
+                "Vehicle not found"
+
+            );
+
+        }
+
+
+        currentVehicle =
+            data.registration;
+
+
+        displayVehicle(
+            currentVehicle
+        );
+
+
+    }
+
+    catch (err) {
+
+
+        error.textContent =
+            err.message;
+
+
+        error.style.display =
+            "block";
+
+    }
+
+}
+
+
+
+// ==========================================
+// DISPLAY VEHICLE
+// ==========================================
+
+function displayVehicle(
+    vehicle
+) {
+
+
+    document
+        .getElementById(
+            "resultRego"
+        )
+        .textContent =
+            vehicle.rego;
+
+
+    document
+        .getElementById(
+            "resultRP"
+        )
+        .textContent =
+            vehicle.rpName;
+
+
+    document
+        .getElementById(
+            "resultDiscord"
+        )
+        .textContent =
+            vehicle.discordUser;
+
+
+    document
+        .getElementById(
+            "resultRoblox"
+        )
+        .textContent =
+            vehicle.robloxUser;
+
+
+    document
+        .getElementById(
+            "resultCar"
+        )
+        .textContent =
+            vehicle.carModel;
+
+
+    document
+        .getElementById(
+            "vehicleResult"
+        )
+        .style.display =
+            "block";
+
+
+    displayRecords(
+
+        "warningsCard",
+
+        "warningsList",
+
+        vehicle.warnings,
+
+        "warning"
+
+    );
+
+
+    displayRecords(
+
+        "ticketsCard",
+
+        "ticketsList",
+
+        vehicle.tickets,
+
+        "ticket"
+
+    );
+
+
+    displayRecords(
+
+        "notesCard",
+
+        "notesList",
+
+        vehicle.notes,
+
+        "note"
+
+    );
+
+}
+
+
+
+// ==========================================
+// DISPLAY RECORDS
+// ==========================================
+
+function displayRecords(
+
+    cardId,
+
+    listId,
+
+    records,
+
+    type
+
+) {
+
+
+    const card =
+
+        document
+            .getElementById(
+                cardId
+            );
+
+
+    const list =
+
+        document
+            .getElementById(
+                listId
+            );
+
+
+    if (
+        !records ||
+        records.length === 0
+    ) {
+
+        card.style.display =
+            "none";
+
+        return;
+
+    }
+
+
+    card.style.display =
+        "block";
+
+
+    list.innerHTML =
+        "";
+
+
+    records
+        .slice()
+        .reverse()
+        .forEach(
+            record => {
+
+
+                const div =
+
+                    document
+                        .createElement(
+                            "div"
+                        );
+
+
+                div.className =
+
+                    "record " +
+                    type;
+
+
+                const date =
+
+                    new Date(
+                        record.createdAt
+                    )
+                    .toLocaleString();
+
+
+                div.innerHTML = `
+
+                    <div class="record-header">
+
+                        <span class="record-type">
+
+                            ${type}
+
+                        </span>
+
+                        <span class="record-date">
+
+                            ${date}
+
+                        </span>
+
+                    </div>
+
+
+                    <strong>
+
+                        ${escapeHTML(
+                            record.message
+                        )}
+
+                    </strong>
+
+
+                    <br><br>
+
+
+                    <span>
+
+                        Officer:
+                        ${escapeHTML(
+                            record.officer
+                        )}
+
+                    </span>
+
+                `;
+
+
+                list.appendChild(
+                    div
+                );
+
+            }
+        );
+
+}
+
+
+
+// ==========================================
+// OPEN RECORD FORM
+// ==========================================
+
+function openRecord(
+    type
+) {
+
+
+    currentRecordType =
+        type;
+
+
+    const box =
+
+        document
+            .getElementById(
+                "addRecordBox"
+            );
+
+
+    const title =
+
+        document
+            .getElementById(
+                "recordTitle"
+            );
+
+
+    if (
+        type ===
+        "warning"
+    ) {
+
+        title.textContent =
+            "Add Warning";
+
+    }
+
+
+    if (
+        type ===
+        "ticket"
+    ) {
+
+        title.textContent =
+            "Issue Ticket";
+
+    }
+
+
+    if (
+        type ===
+        "note"
+    ) {
+
+        title.textContent =
+            "Add Police Note";
+
+    }
+
+
+    box.classList.add(
+        "show"
+    );
+
+
+    document
+        .getElementById(
+            "recordMessage"
+        )
+        .focus();
+
+}
+
+
+
+// ==========================================
+// SUBMIT RECORD
+// ==========================================
+
+async function submitRecord() {
+
+
+    if (!currentVehicle) {
+
+        return;
+
+    }
+
+
+    const message =
+
+        document
+            .getElementById(
+                "recordMessage"
+            )
+            .value
+            .trim();
+
+
+    const officer =
+
+        document
+            .getElementById(
+                "officerName"
+            )
+            .value
+            .trim();
+
+
+    if (!message) {
+
+        alert(
+            "Please enter record details."
+        );
+
+        return;
+
+    }
+
+
+    try {
+
+
+        const response =
+
+            await fetch(
+
+                API_URL,
+
+                {
+
+                    method:
+                        "PATCH",
+
+                    headers: {
+
+                        "Content-Type":
+                            "application/json"
+
+                    },
+
+                    body:
+
+                        JSON.stringify({
+
+                            rego:
+                                currentVehicle.rego,
+
+                            type:
+                                currentRecordType,
+
+                            message:
+                                message,
+
+                            officer:
+                                officer ||
+                                "Police Officer"
+
+                        })
+
+                }
+
+            );
+
+
+        const data =
+
+            await response.json();
+
+
+        if (!response.ok) {
+
+            throw new Error(
+
+                data.error ||
+
+                "Failed to update record"
+
+            );
+
+        }
+
+
+        currentVehicle =
+            data.registration;
+
+
+        displayVehicle(
+            currentVehicle
+        );
+
+
+        document
+            .getElementById(
+                "recordMessage"
+            )
+            .value =
+                "";
+
+
+        document
+            .getElementById(
+                "addRecordBox"
+            )
+            .classList
+            .remove(
+                "show"
+            );
+
+
+        alert(
+            "Record successfully added."
+        );
+
+
+    }
+
+    catch (error) {
+
+        alert(
+            error.message
+        );
+
+    }
+
+}
+
+
+
+// ==========================================
+// QUICK RECORD
+// ==========================================
+
+async function addRecord(
+
+    type,
+
+    message
+
+) {
+
+
+    if (!currentVehicle) {
+
+        return;
+
+    }
+
+
+    const officer =
+
+        prompt(
+            "Enter your officer name:"
+        );
+
+
+    if (!officer) {
+
+        return;
+
+    }
+
+
+    try {
+
+
+        const response =
+
+            await fetch(
+
+                API_URL,
+
+                {
+
+                    method:
+                        "PATCH",
+
+                    headers: {
+
+                        "Content-Type":
+                            "application/json"
+
+                    },
+
+                    body:
+
+                        JSON.stringify({
+
+                            rego:
+                                currentVehicle.rego,
+
+                            type:
+                                type,
+
+                            message:
+                                message,
+
+                            officer:
+                                officer
+
+                        })
+
+                }
+
+            );
+
+
+        const data =
+
+            await response.json();
+
+
+        if (!response.ok) {
+
+            throw new Error(
+
+                data.error ||
+
+                "Failed to update"
+
+            );
+
+        }
+
+
+        currentVehicle =
+            data.registration;
+
+
+        displayVehicle(
+            currentVehicle
+        );
+
+
+    }
+
+    catch (error) {
+
+        alert(
+            error.message
+        );
+
+    }
+
+}
+
+
+
+// ==========================================
+// DELETE REGISTRATION
+// ==========================================
+
+async function deleteRegistration() {
+
+
+    if (!currentVehicle) {
+
+        return;
+
+    }
+
+
+    const confirmDelete =
+
+        confirm(
+
+            "Are you sure you want to permanently delete registration " +
+
+            currentVehicle.rego +
+
+            "?"
+
+        );
+
+
+    if (!confirmDelete) {
+
+        return;
+
+    }
+
+
+    try {
+
+
+        const response =
+
+            await fetch(
+
+                API_URL,
+
+                {
+
+                    method:
+                        "DELETE",
+
+                    headers: {
+
+                        "Content-Type":
+                            "application/json"
+
+                    },
+
+                    body:
+
+                        JSON.stringify({
+
+                            rego:
+                                currentVehicle.rego
+
+                        })
+
+                }
+
+            );
+
+
+        const data =
+
+            await response.json();
+
+
+        if (!response.ok) {
+
+            throw new Error(
+
+                data.error ||
+
+                "Failed to delete"
+
+            );
+
+        }
+
+
+        alert(
+            "Registration deleted."
+        );
+
+
+        location.reload();
+
+
+    }
+
+    catch (error) {
+
+        alert(
+            error.message
+        );
+
+    }
+
+}
+
+
+
+// ==========================================
+// SECURITY
+// ==========================================
+
+function escapeHTML(
+    value
+) {
+
+
+    const div =
+
+        document
+            .createElement(
+                "div"
+            );
+
+
+    div.textContent =
+        value;
+
+
+    return div.innerHTML;
+
+}
+
+
+</script>
+
+
+</body>
+
+</html>
