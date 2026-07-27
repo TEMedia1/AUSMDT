@@ -1,1 +1,854 @@
+<!DOCTYPE html>
+<html lang="en">
 
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Officer Directory | Police MDT</title>
+
+
+    <style>
+
+        * {
+
+            box-sizing: border-box;
+
+            margin: 0;
+
+            padding: 0;
+
+            font-family:
+                Arial,
+                Helvetica,
+                sans-serif;
+
+        }
+
+
+        body {
+
+            background: #0b1118;
+
+            color: white;
+
+            min-height: 100vh;
+
+        }
+
+
+        /* =========================
+           SIDEBAR
+        ========================= */
+
+        .sidebar {
+
+            position: fixed;
+
+            left: 0;
+
+            top: 0;
+
+            width: 240px;
+
+            height: 100vh;
+
+            background: #101923;
+
+            border-right:
+                1px solid #263443;
+
+            padding: 20px;
+
+        }
+
+
+        .logo {
+
+            text-align: center;
+
+            padding-bottom: 25px;
+
+            border-bottom:
+                1px solid #263443;
+
+            margin-bottom: 20px;
+
+        }
+
+
+        .logo h1 {
+
+            font-size: 20px;
+
+        }
+
+
+        .logo p {
+
+            color: #8d9baa;
+
+            font-size: 12px;
+
+            margin-top: 5px;
+
+        }
+
+
+        /* =========================
+           NAVIGATION
+        ========================= */
+
+        .nav a {
+
+            display: block;
+
+            color: #c7d0d9;
+
+            text-decoration: none;
+
+            padding: 13px;
+
+            margin-bottom: 5px;
+
+            border-radius: 5px;
+
+        }
+
+
+        .nav a:hover {
+
+            background: #1c2b3a;
+
+            color: white;
+
+        }
+
+
+        .nav a.active {
+
+            background: #1d4f7a;
+
+            color: white;
+
+        }
+
+
+        /* =========================
+           MAIN
+        ========================= */
+
+        .main {
+
+            margin-left: 240px;
+
+            padding: 30px;
+
+        }
+
+
+        .topbar {
+
+            display: flex;
+
+            justify-content:
+                space-between;
+
+            align-items: center;
+
+            margin-bottom: 30px;
+
+        }
+
+
+        .topbar h2 {
+
+            font-size: 25px;
+
+        }
+
+
+        .topbar p {
+
+            color: #8d9baa;
+
+            margin-top: 5px;
+
+        }
+
+
+        .status {
+
+            background: #162331;
+
+            color: #7ee787;
+
+            padding:
+                10px 15px;
+
+            border-radius: 5px;
+
+            font-size: 13px;
+
+        }
+
+
+        /* =========================
+           OFFICER GRID
+        ========================= */
+
+        .officer-grid {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(
+                    auto-fill,
+                    minmax(
+                        280px,
+                        1fr
+                    )
+                );
+
+            gap: 20px;
+
+        }
+
+
+        /* =========================
+           OFFICER CARD
+        ========================= */
+
+        .officer-card {
+
+            background: #101923;
+
+            border:
+                1px solid #263443;
+
+            border-radius: 8px;
+
+            padding: 20px;
+
+            transition:
+                0.2s;
+
+        }
+
+
+        .officer-card:hover {
+
+            transform:
+                translateY(-3px);
+
+            background:
+                #14202c;
+
+        }
+
+
+        .officer-header {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 15px;
+
+            margin-bottom: 20px;
+
+        }
+
+
+        .avatar {
+
+            width: 65px;
+
+            height: 65px;
+
+            border-radius: 50%;
+
+            object-fit: cover;
+
+            background: #1c2b3a;
+
+            border:
+                2px solid #263443;
+
+        }
+
+
+        .officer-name {
+
+            min-width: 0;
+
+        }
+
+
+        .officer-name h3 {
+
+            font-size: 17px;
+
+            white-space:
+                nowrap;
+
+            overflow: hidden;
+
+            text-overflow:
+                ellipsis;
+
+        }
+
+
+        .officer-name p {
+
+            color: #8d9baa;
+
+            font-size: 13px;
+
+            margin-top: 4px;
+
+        }
+
+
+        /* =========================
+           INFO
+        ========================= */
+
+        .info-row {
+
+            display: flex;
+
+            justify-content:
+                space-between;
+
+            padding:
+                10px 0;
+
+            border-top:
+                1px solid #263443;
+
+            font-size: 13px;
+
+        }
+
+
+        .info-label {
+
+            color: #8d9baa;
+
+        }
+
+
+        .info-value {
+
+            color: white;
+
+            text-align: right;
+
+        }
+
+
+        /* =========================
+           PROFILE BUTTON
+        ========================= */
+
+        .profile-button {
+
+            display: block;
+
+            text-align: center;
+
+            margin-top: 18px;
+
+            padding: 10px;
+
+            background: #1d4f7a;
+
+            color: white;
+
+            text-decoration: none;
+
+            border-radius: 5px;
+
+            font-size: 13px;
+
+        }
+
+
+        .profile-button:hover {
+
+            background: #27689f;
+
+        }
+
+
+        /* =========================
+           EMPTY
+        ========================= */
+
+        .empty {
+
+            background: #101923;
+
+            border:
+                1px solid #263443;
+
+            border-radius: 8px;
+
+            padding: 40px;
+
+            text-align: center;
+
+            color: #8d9baa;
+
+        }
+
+
+        /* =========================
+           MOBILE
+        ========================= */
+
+        @media (max-width: 600px) {
+
+            .sidebar {
+
+                position: relative;
+
+                width: 100%;
+
+                height: auto;
+
+            }
+
+
+            .main {
+
+                margin-left: 0;
+
+                padding: 15px;
+
+            }
+
+
+            .topbar {
+
+                flex-direction:
+                    column;
+
+                align-items:
+                    flex-start;
+
+                gap: 15px;
+
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <!-- =========================
+         SIDEBAR
+    ========================= -->
+
+    <aside class="sidebar">
+
+
+        <div class="logo">
+
+            <h1>
+                POLICE MDT
+            </h1>
+
+            <p>
+                Official Information System
+            </p>
+
+        </div>
+
+
+        <nav class="nav">
+
+
+            <a href="index.html">
+
+                Dashboard
+
+            </a>
+
+
+            <a href="calls.html">
+
+                Active Calls
+
+            </a>
+
+
+            <a
+                href="officers.html"
+                class="active"
+            >
+
+                Officer Directory
+
+            </a>
+
+
+        </nav>
+
+
+    </aside>
+
+
+
+    <!-- =========================
+         MAIN
+    ========================= -->
+
+    <main class="main">
+
+
+        <div class="topbar">
+
+
+            <div>
+
+                <h2>
+                    Officer Directory
+                </h2>
+
+                <p>
+                    Registered Police Department personnel
+                </p>
+
+            </div>
+
+
+            <div
+                class="status"
+                id="systemStatus"
+            >
+
+                ● LOADING
+
+            </div>
+
+
+        </div>
+
+
+
+        <!-- OFFICERS -->
+
+        <div
+            class="officer-grid"
+            id="officerGrid"
+        >
+
+            <div class="empty">
+
+                Loading officers...
+
+            </div>
+
+        </div>
+
+
+    </main>
+
+
+
+    <script>
+
+
+        // =========================
+        // API
+        // =========================
+
+        const API_URL =
+            "https://ausbotsmdt.vercel.app/api/info";
+
+
+
+        // =========================
+        // LOAD OFFICERS
+        // =========================
+
+        async function loadOfficers() {
+
+
+            const grid =
+                document.getElementById(
+                    "officerGrid"
+                );
+
+
+            const status =
+                document.getElementById(
+                    "systemStatus"
+                );
+
+
+            try {
+
+
+                const response =
+                    await fetch(
+                        API_URL
+                    );
+
+
+                if (!response.ok) {
+
+                    throw new Error(
+                        "API Error"
+                    );
+
+                }
+
+
+                const data =
+                    await response.json();
+
+
+                const officers =
+                    data.officers || [];
+
+
+                // Clear grid
+
+                grid.innerHTML =
+                    "";
+
+
+                // No officers
+
+                if (
+                    officers.length === 0
+                ) {
+
+                    grid.innerHTML = `
+
+                        <div class="empty">
+
+                            No officers are currently registered.
+
+                        </div>
+
+                    `;
+
+                }
+
+
+                // Create officer cards
+
+                officers.forEach(
+                    officer => {
+
+
+                        const avatarURL =
+
+                            `https://www.roblox.com/headshot-thumbnail/image?userId=${officer.userId}&width=150&height=150&format=png`;
+
+
+                        const profileURL =
+
+                            `https://www.roblox.com/users/${officer.userId}/profile`;
+
+
+                        const card =
+
+                            document.createElement(
+                                "div"
+                            );
+
+
+                        card.className =
+                            "officer-card";
+
+
+                        card.innerHTML = `
+
+                            <div class="officer-header">
+
+                                <img
+                                    class="avatar"
+                                    src="${avatarURL}"
+                                    alt="Roblox Avatar"
+                                >
+
+                                <div class="officer-name">
+
+                                    <h3>
+                                        ${escapeHTML(
+                                            officer.displayName
+                                        )}
+                                    </h3>
+
+                                    <p>
+                                        @${escapeHTML(
+                                            officer.username
+                                        )}
+                                    </p>
+
+                                </div>
+
+                            </div>
+
+
+                            <div class="info-row">
+
+                                <span class="info-label">
+                                    Rank
+                                </span>
+
+                                <span class="info-value">
+                                    ${escapeHTML(
+                                        officer.rank ||
+                                        "Not Set"
+                                    )}
+                                </span>
+
+                            </div>
+
+
+                            <div class="info-row">
+
+                                <span class="info-label">
+                                    Roblox ID
+                                </span>
+
+                                <span class="info-value">
+                                    ${escapeHTML(
+                                        String(
+                                            officer.userId
+                                        )
+                                    )}
+                                </span>
+
+                            </div>
+
+
+                            <a
+                                class="profile-button"
+                                href="${profileURL}"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                            >
+
+                                View Roblox Profile
+
+                            </a>
+
+                        `;
+
+
+                        grid.appendChild(
+                            card
+                        );
+
+
+                    }
+                );
+
+
+                status.textContent =
+                    "● MDT ONLINE";
+
+
+            }
+
+            catch (error) {
+
+
+                console.error(
+                    error
+                );
+
+
+                status.textContent =
+                    "● MDT OFFLINE";
+
+
+                grid.innerHTML = `
+
+                    <div class="empty">
+
+                        Unable to connect to MDT API.
+
+                        <br><br>
+
+                        Please contact a system administrator.
+
+                    </div>
+
+                `;
+
+            }
+
+        }
+
+
+
+        // =========================
+        // SECURITY
+        // =========================
+
+        function escapeHTML(
+            value
+        ) {
+
+            const div =
+                document.createElement(
+                    "div"
+                );
+
+
+            div.textContent =
+                value;
+
+
+            return div.innerHTML;
+
+        }
+
+
+
+        // =========================
+        // INITIAL LOAD
+        // =========================
+
+        loadOfficers();
+
+
+
+        // =========================
+        // REFRESH
+        // =========================
+
+        setInterval(
+
+            loadOfficers,
+
+            10000
+
+        );
+
+
+    </script>
+
+
+</body>
+
+</html>
