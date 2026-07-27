@@ -1,0 +1,855 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Community Reports</title>
+
+<style>
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+body {
+    background: #0b1118;
+    color: white;
+    min-height: 100vh;
+}
+
+.navbar {
+    background: #101923;
+    border-bottom: 1px solid #263443;
+    padding: 20px 40px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.navbar h1 {
+    font-size: 20px;
+}
+
+.navbar a {
+    color: #c7d0d9;
+    text-decoration: none;
+    margin-left: 20px;
+    font-size: 14px;
+}
+
+.navbar a:hover {
+    color: white;
+}
+
+.container {
+    max-width: 750px;
+    margin: 40px auto;
+    padding: 20px;
+}
+
+.card {
+    background: #101923;
+    border: 1px solid #263443;
+    border-radius: 8px;
+    padding: 30px;
+}
+
+.card h2 {
+    margin-bottom: 10px;
+}
+
+.description {
+    color: #8d9baa;
+    font-size: 14px;
+    line-height: 1.5;
+    margin-bottom: 25px;
+}
+
+label {
+    display: block;
+    color: #c7d0d9;
+    font-size: 13px;
+    margin-top: 20px;
+    margin-bottom: 7px;
+}
+
+.required {
+    color: #ff7b72;
+}
+
+input,
+textarea,
+select {
+
+    width: 100%;
+
+    padding: 13px;
+
+    background: #0b1118;
+
+    color: white;
+
+    border: 1px solid #263443;
+
+    border-radius: 5px;
+
+    outline: none;
+
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+
+    border-color: #27689f;
+
+}
+
+textarea {
+
+    min-height: 130px;
+
+    resize: vertical;
+
+}
+
+input[type="file"] {
+
+    padding: 10px;
+
+}
+
+.file-info {
+
+    color: #8d9baa;
+
+    font-size: 12px;
+
+    margin-top: 7px;
+
+}
+
+button {
+
+    width: 100%;
+
+    margin-top: 30px;
+
+    padding: 15px;
+
+    background: #1d4f7a;
+
+    color: white;
+
+    border: none;
+
+    border-radius: 5px;
+
+    cursor: pointer;
+
+    font-size: 15px;
+
+}
+
+button:hover {
+
+    background: #27689f;
+
+}
+
+button:disabled {
+
+    opacity: 0.5;
+
+    cursor: not-allowed;
+
+}
+
+#message {
+
+    display: none;
+
+    margin-top: 20px;
+
+    padding: 15px;
+
+    border-radius: 5px;
+
+    font-size: 14px;
+
+}
+
+.success {
+
+    display: block !important;
+
+    background: #12351f;
+
+    color: #7ee787;
+
+}
+
+.error {
+
+    display: block !important;
+
+    background: #351515;
+
+    color: #ff7b72;
+
+}
+
+@media (max-width: 700px) {
+
+    .navbar {
+
+        flex-direction: column;
+
+        gap: 15px;
+
+        padding: 20px;
+
+    }
+
+    .navbar a {
+
+        margin: 0 8px;
+
+    }
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<nav class="navbar">
+
+    <h1>
+        Community Reports
+    </h1>
+
+    <div>
+
+        <a href="index.html">
+            Home
+        </a>
+
+    </div>
+
+</nav>
+
+
+<div class="container">
+
+
+<div class="card">
+
+
+<h2>
+    Submit a Report
+</h2>
+
+
+<p class="description">
+
+    Use this form to submit a report to the staff team.
+    Please provide accurate information and as much detail
+    as possible.
+
+</p>
+
+
+<form id="reportForm">
+
+
+<!-- YOUR DISCORD -->
+
+<label>
+
+    Your Discord Username
+    <span class="required">*</span>
+
+</label>
+
+<input
+
+    type="text"
+
+    id="reporterDiscord"
+
+    placeholder="Example: username"
+
+    maxlength="100"
+
+    required
+
+>
+
+
+<!-- REPORTED ROBLOX -->
+
+<label>
+
+    Reported Person's Roblox Username
+    <span class="required">*</span>
+
+</label>
+
+<input
+
+    type="text"
+
+    id="reportedRoblox"
+
+    placeholder="Example: RobloxUsername"
+
+    maxlength="100"
+
+    required
+
+>
+
+
+<!-- REPORTED DISCORD -->
+
+<label>
+
+    Reported Person's Discord Username
+    <span class="required">*</span>
+
+</label>
+
+<input
+
+    type="text"
+
+    id="reportedDiscord"
+
+    placeholder="Example: username"
+
+    maxlength="100"
+
+    required
+
+>
+
+
+<!-- REASON -->
+
+<label>
+
+    Reason for Report
+    <span class="required">*</span>
+
+</label>
+
+<select
+
+    id="reason"
+
+    required
+
+>
+
+    <option value="">
+        Select a reason
+    </option>
+
+    <option value="RDM">
+        RDM / Random Deathmatch
+    </option>
+
+    <option value="VDM">
+        VDM / Vehicle Deathmatch
+    </option>
+
+    <option value="Fail RP">
+        Fail Roleplay
+    </option>
+
+    <option value="Trolling">
+        Trolling
+    </option>
+
+    <option value="Exploiting / Cheating">
+        Exploiting / Cheating
+    </option>
+
+    <option value="Harassment">
+        Harassment
+    </option>
+
+    <option value="Staff Misconduct">
+        Staff Misconduct
+    </option>
+
+    <option value="Community Rules">
+        Community Rules Violation
+    </option>
+
+    <option value="Other">
+        Other
+    </option>
+
+</select>
+
+
+<!-- DESCRIPTION -->
+
+<label>
+
+    Detailed Description
+    <span class="required">*</span>
+
+</label>
+
+<textarea
+
+    id="description"
+
+    placeholder="Explain what happened in as much detail as possible."
+
+    maxlength="2000"
+
+    required
+
+></textarea>
+
+
+<!-- DATE -->
+
+<label>
+
+    Date / Time of Incident
+    <span class="required">*</span>
+
+</label>
+
+<input
+
+    type="datetime-local"
+
+    id="incidentDate"
+
+    required
+
+>
+
+
+<!-- IMAGE -->
+
+<label>
+
+    Evidence Image Upload
+
+</label>
+
+<input
+
+    type="file"
+
+    id="evidenceImage"
+
+    accept="image/png,image/jpeg,image/webp"
+
+>
+
+<p class="file-info">
+
+    Upload a screenshot or image showing evidence of the incident.
+    Maximum file size: 5 MB.
+
+</p>
+
+
+<!-- ADDITIONAL -->
+
+<label>
+
+    Additional Information
+
+</label>
+
+<textarea
+
+    id="additionalInfo"
+
+    placeholder="Anything else the staff team should know?"
+
+    maxlength="2000"
+
+></textarea>
+
+
+<!-- SUBMIT -->
+
+<button
+
+    type="submit"
+
+    id="submitButton"
+
+>
+
+    Submit Report
+
+</button>
+
+
+</form>
+
+
+<div id="message"></div>
+
+
+</div>
+
+</div>
+
+
+<script>
+
+
+const API_URL =
+
+    "https://ausbotsmdt.vercel.app/api/report";
+
+
+document
+
+.getElementById("reportForm")
+
+.addEventListener(
+
+"submit",
+
+async function(event) {
+
+
+    event.preventDefault();
+
+
+    const button =
+
+        document.getElementById(
+            "submitButton"
+        );
+
+
+    const message =
+
+        document.getElementById(
+            "message"
+        );
+
+
+    const file =
+
+        document.getElementById(
+            "evidenceImage"
+        ).files[0];
+
+
+    // Check file size
+
+    if (
+
+        file &&
+
+        file.size >
+        5 * 1024 * 1024
+
+    ) {
+
+        message.textContent =
+
+            "The evidence image must be smaller than 5 MB.";
+
+        message.className =
+            "error";
+
+        return;
+
+    }
+
+
+    button.disabled =
+        true;
+
+    button.textContent =
+        "Submitting Report...";
+
+
+    message.className = "";
+
+
+    try {
+
+
+        let evidenceImage = "";
+
+
+        // Convert image to Base64
+
+        if (file) {
+
+            evidenceImage =
+
+                await new Promise(
+
+                    (resolve, reject) => {
+
+
+                        const reader =
+
+                            new FileReader();
+
+
+                        reader.onload =
+
+                            function() {
+
+                                resolve(
+                                    reader.result
+                                );
+
+                            };
+
+
+                        reader.onerror =
+
+                            reject;
+
+
+                        reader.readAsDataURL(
+                            file
+                        );
+
+                    }
+
+                );
+
+        }
+
+
+        const reportData = {
+
+            reporterDiscord:
+
+                document
+
+                .getElementById(
+                    "reporterDiscord"
+                )
+
+                .value
+
+                .trim(),
+
+
+            reportedRoblox:
+
+                document
+
+                .getElementById(
+                    "reportedRoblox"
+                )
+
+                .value
+
+                .trim(),
+
+
+            reportedDiscord:
+
+                document
+
+                .getElementById(
+                    "reportedDiscord"
+                )
+
+                .value
+
+                .trim(),
+
+
+            reason:
+
+                document
+
+                .getElementById(
+                    "reason"
+                )
+
+                .value,
+
+
+            description:
+
+                document
+
+                .getElementById(
+                    "description"
+                )
+
+                .value
+
+                .trim(),
+
+
+            incidentDate:
+
+                document
+
+                .getElementById(
+                    "incidentDate"
+                )
+
+                .value,
+
+
+            evidenceImage:
+
+                evidenceImage,
+
+
+            additionalInfo:
+
+                document
+
+                .getElementById(
+                    "additionalInfo"
+                )
+
+                .value
+
+                .trim()
+
+        };
+
+
+        const response =
+
+            await fetch(
+
+                API_URL,
+
+                {
+
+                    method:
+                        "POST",
+
+                    headers: {
+
+                        "Content-Type":
+                            "application/json"
+
+                    },
+
+                    body:
+
+                        JSON.stringify(
+                            reportData
+                        )
+
+                }
+
+            );
+
+
+        const data =
+
+            await response.json();
+
+
+        if (!response.ok) {
+
+            throw new Error(
+
+                data.error ||
+
+                "Failed to submit report."
+
+            );
+
+        }
+
+
+        message.textContent =
+
+            "Your report has been successfully submitted to the staff team.";
+
+
+        message.className =
+            "success";
+
+
+        document
+
+        .getElementById(
+            "reportForm"
+        )
+
+        .reset();
+
+
+    }
+
+    catch (error) {
+
+
+        console.error(
+            error
+        );
+
+
+        message.textContent =
+
+            error.message ||
+
+            "Something went wrong while submitting your report.";
+
+
+        message.className =
+            "error";
+
+    }
+
+
+    finally {
+
+
+        button.disabled =
+            false;
+
+
+        button.textContent =
+            "Submit Report";
+
+
+    }
+
+
+}
+
+);
+
+</script>
+
+
+</body>
+
+</html>
