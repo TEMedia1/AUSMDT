@@ -1,1 +1,391 @@
+<!DOCTYPE html>
+<html lang="en">
 
+<head>
+
+<meta charset="UTF-8">
+
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+>
+
+<title>Vehicle Registration</title>
+
+<style>
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    background: #0b1118;
+    color: white;
+    min-height: 100vh;
+}
+
+.navbar {
+    background: #101923;
+    border-bottom: 1px solid #263443;
+    padding: 20px 40px;
+}
+
+.navbar a {
+    color: #c7d0d9;
+    text-decoration: none;
+    margin-right: 25px;
+}
+
+.container {
+    max-width: 700px;
+    margin: 50px auto;
+    padding: 20px;
+}
+
+.card {
+    background: #101923;
+    border: 1px solid #263443;
+    border-radius: 8px;
+    padding: 30px;
+}
+
+h1 {
+    margin-bottom: 10px;
+}
+
+.description {
+    color: #8d9baa;
+    margin-bottom: 30px;
+}
+
+label {
+    display: block;
+    margin-top: 18px;
+    margin-bottom: 7px;
+    color: #c7d0d9;
+}
+
+input {
+    width: 100%;
+    padding: 13px;
+    background: #0b1118;
+    color: white;
+    border: 1px solid #263443;
+    border-radius: 5px;
+    outline: none;
+}
+
+input:focus {
+    border-color: #1d4f7a;
+}
+
+button {
+    width: 100%;
+    margin-top: 25px;
+    padding: 13px;
+    background: #1d4f7a;
+    border: none;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+button:hover {
+    background: #27689f;
+}
+
+#message {
+    margin-top: 20px;
+    padding: 15px;
+    display: none;
+    border-radius: 5px;
+}
+
+.success {
+    background: #12351f;
+    color: #7ee787;
+}
+
+.error {
+    background: #351515;
+    color: #ff7b72;
+}
+
+</style>
+
+</head>
+
+<body>
+
+
+<div class="navbar">
+
+<a href="index.html">
+Home
+</a>
+
+<a href="regos.html">
+Vehicle Registration
+</a>
+
+<a href="regocheck.html">
+Check Registration
+</a>
+
+</div>
+
+
+<div class="container">
+
+<div class="card">
+
+<h1>
+Vehicle Registration
+</h1>
+
+<p class="description">
+
+Register your vehicle with the
+Police Vehicle Registration System.
+
+</p>
+
+
+<form id="regoForm">
+
+
+<label>
+Vehicle Registration
+</label>
+
+<input
+    type="text"
+    id="rego"
+    placeholder="Example: ABC123"
+    required
+>
+
+
+<label>
+RP Name
+</label>
+
+<input
+    type="text"
+    id="rpName"
+    placeholder="Your RP name"
+    required
+>
+
+
+<label>
+Discord Username
+</label>
+
+<input
+    type="text"
+    id="discordUser"
+    placeholder="Example: username"
+    required
+>
+
+
+<label>
+Roblox Username
+</label>
+
+<input
+    type="text"
+    id="robloxUser"
+    placeholder="Example: RobloxUsername"
+    required
+>
+
+
+<label>
+Car Model
+</label>
+
+<input
+    type="text"
+    id="carModel"
+    placeholder="Example: 2018 Holden Commodore"
+    required
+>
+
+
+<label>
+Password
+</label>
+
+<input
+    type="password"
+    id="password"
+    placeholder="Create a password"
+    required
+>
+
+
+<button type="submit">
+
+Register Vehicle
+
+</button>
+
+
+</form>
+
+
+<div id="message"></div>
+
+
+</div>
+
+</div>
+
+
+<script>
+
+const API_URL =
+    "https://ausbotsmdt.vercel.app/api/rego";
+
+
+document
+    .getElementById("regoForm")
+    .addEventListener(
+        "submit",
+        async function(event) {
+
+            event.preventDefault();
+
+
+            const message =
+                document.getElementById(
+                    "message"
+                );
+
+
+            const data = {
+
+                rego:
+                    document.getElementById(
+                        "rego"
+                    ).value.trim(),
+
+                rpName:
+                    document.getElementById(
+                        "rpName"
+                    ).value.trim(),
+
+                discordUser:
+                    document.getElementById(
+                        "discordUser"
+                    ).value.trim(),
+
+                robloxUser:
+                    document.getElementById(
+                        "robloxUser"
+                    ).value.trim(),
+
+                carModel:
+                    document.getElementById(
+                        "carModel"
+                    ).value.trim(),
+
+                password:
+                    document.getElementById(
+                        "password"
+                    ).value
+
+            };
+
+
+            try {
+
+                const response =
+                    await fetch(
+                        API_URL,
+                        {
+
+                            method: "POST",
+
+                            headers: {
+
+                                "Content-Type":
+                                    "application/json"
+
+                            },
+
+                            body:
+                                JSON.stringify(
+                                    data
+                                )
+
+                        }
+                    );
+
+
+                const result =
+                    await response.json();
+
+
+                if (!response.ok) {
+
+                    throw new Error(
+                        result.error ||
+                        "Registration failed"
+                    );
+
+                }
+
+
+                message.style.display =
+                    "block";
+
+                message.className =
+                    "success";
+
+
+                message.innerHTML =
+
+                    "Vehicle registered successfully!<br><br>" +
+
+                    "Registration: " +
+                    result.registration.rego;
+
+
+                document
+                    .getElementById(
+                        "regoForm"
+                    )
+                    .reset();
+
+
+            }
+
+            catch (error) {
+
+                message.style.display =
+                    "block";
+
+                message.className =
+                    "error";
+
+
+                message.textContent =
+                    error.message;
+
+            }
+
+        }
+    );
+
+</script>
+
+
+</body>
+
+</html>
